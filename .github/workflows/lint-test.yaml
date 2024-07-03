@@ -16,8 +16,6 @@ jobs:
           check-latest: true
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.1
-        with:
-
       - name: List changed charts
         id: list-changed
         run: |
