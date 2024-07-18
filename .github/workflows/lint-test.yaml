@@ -37,5 +37,5 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         run: |
           kubectl create ns test-namespace
-          kubectl create secret docker-registry ghcr-login --docker-server=https://ghcr.io --docker-username=${{ github.actor }} --docker-password=${{ github.token }} -n test-namespace
+          kubectl create secret docker-registry ghcr-login --docker-server=ghcr.io --docker-username=${{ github.actor }} --docker-password=${{ github.token }} -n test-namespace
           ct install --namespace=test-namespace --target-branch ${{ github.event.repository.default_branch }} --debug
