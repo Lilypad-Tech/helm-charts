@@ -4,6 +4,8 @@ on: pull_request
 
 jobs:
   lint-test:
+    permissions:
+      packages: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -35,7 +37,7 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         run: |
           kubectl create ns test-namespace
-          kubectl create secret docker-registry ghcr-login-secret --docker-server=https://ghcr.io --docker-username=$GITHUB_USER --docker-password=$GITHUB_TOKEN -n test-namespace
+          kubectl create secret docker-registry ghcr-login --docker-server=https://ghcr.io --docker-username=$GITHUB_USER --docker-password=${{ github.token }} -n test-namespace
       - name: Test Charts
         if: steps.list-changed.outputs.changed == 'true'
         run: ct install --namespace=test-namespace --target-branch ${{ github.event.repository.default_branch }}
